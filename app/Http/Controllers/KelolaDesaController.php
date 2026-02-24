@@ -37,7 +37,7 @@ class KelolaDesaController extends Controller
     public function index()
     {
         $data = Desa::all();
-        return view('components.kelola-desa', compact('data'));
+        return view('admin.desa.kelola-desa', compact('data'));
     }
 
 

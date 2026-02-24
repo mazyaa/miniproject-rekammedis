@@ -35,7 +35,7 @@ class KelolaJenisKelaminController extends Controller
     public function index()
     {
         $data = JenisKelamin::all();
-        return view('components.kelola-jenis-kelamin', compact('data'));
+        return view('admin.JenisKelamin.kelola-jenis-kelamin', compact('data'));
     }
 
     // ! ======================= UPDATE ===================================
