@@ -5,7 +5,7 @@
     <!--begin::Copyright-->
     <strong>
         Copyright &copy; 2026&nbsp;
-        <a href="https://adminlte.io" class="text-decoration-none">rekamedis_app</a>.
+        <a href="https://github.com/mazyaa/miniproject-rekammedis" class="text-decoration-none">rekam medis APP</a>.
     </strong>
     <!--end::Copyright-->
 </footer>

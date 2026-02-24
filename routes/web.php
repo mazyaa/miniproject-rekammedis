@@ -7,7 +7,7 @@ use App\Models\Desa;
 use App\Models\JenisKelamin;
 use App\Models\Pasien;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Session;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,15 +28,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $data = Pasien::all();
     $totalPasien = Pasien::count();
-    return view('dashboard', compact('data', 'totalPasien'));
+    return view('admin.dashboard', compact('data', 'totalPasien'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 route::get('/kelola-pasien', function () {
-    Session::flash('info', 'Data Dummy Seeder dan CRUD belum berfungsi');    
+    Session::flash('info', 'Data Dummy Seeder dan CRUD belum berfungsi');
     $data = Pasien::all();
     $jeniskelamin = JenisKelamin::all();
     $desa = Desa::all();
-    return view('components.kelola-pasien', compact('data', 'jeniskelamin', 'desa'));
+    return view('admin.Pasien.kelola-pasien', compact('data', 'jeniskelamin', 'desa'));
 });
 
 // ! ========================================= Desa CRUD ==============================================================
@@ -56,6 +56,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// ! ========================================= REKAM MEDIS ==============================================================
+
+Route::middleware('auth')->group(function (){
+
 });
 
 require __DIR__ . '/auth.php';
