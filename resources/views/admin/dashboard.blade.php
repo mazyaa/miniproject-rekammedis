@@ -6,9 +6,10 @@
                     <h3 class="mb-0 text-primary fw-bold">{{ $title }}</h3>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+                   <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="/dashboard" class="text-black-50">Home</a></li>
+                        <li class="breadcrumb-item active @if (request()->path() == 'dashboard') text-primary @endif"
+                            aria-current="page">{{ $title }}</li>
                     </ol>
                 </div>
             </div>

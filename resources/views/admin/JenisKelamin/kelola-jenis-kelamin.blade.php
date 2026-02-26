@@ -6,9 +6,10 @@
                     <h3 class="mb-0 text-primary fw-bold">{{ $title }}</h3>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+                   <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="/dashboard" class="text-black-50">Home</a></li>
+                        <li class="breadcrumb-item active @if (request()->path() == 'kelola-jenis-kelamin') text-primary @endif"
+                            aria-current="page">{{ $title }}</li>
                     </ol>
                 </div>
             </div>
@@ -22,7 +23,7 @@
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah"> <i
                                 class="bi bi-plus"></i> Tambah</button>
                     </div>
-                    
+
                     <div class="card-body p-0 rounded">
                         <table class="table table-striped">
                             <thead>

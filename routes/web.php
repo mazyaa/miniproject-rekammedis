@@ -8,7 +8,7 @@ use App\Models\Desa;
 use App\Models\JenisKelamin;
 use App\Models\Pasien;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Session;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,15 +29,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $data = Pasien::all();
     $totalPasien = Pasien::count();
-    return view('dashboard', compact('data', 'totalPasien'));
+    return view('admin.dashboard', compact('data', 'totalPasien'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 route::get('/kelola-pasien', function () {
-    Session::flash('info', 'Data Dummy Seeder dan CRUD belum berfungsi');    
+    Session::flash('info', 'Data Dummy Seeder dan CRUD belum berfungsi');
     $data = Pasien::all();
     $jeniskelamin = JenisKelamin::all();
     $desa = Desa::all();
-    return view('components.kelola-pasien', compact('data', 'jeniskelamin', 'desa'));
+    return view('admin.Pasien.kelola-pasien', compact('data', 'jeniskelamin', 'desa'));
 });
 
 // ! ========================================= Desa CRUD ==============================================================
@@ -59,8 +59,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-<<<<<<< Updated upstream
-=======
 
 Route::middleware('auth')->group(function (){
     Route::get('/kelola-petugas', [KelolaPetugasController::class, 'index']);
@@ -69,5 +67,5 @@ Route::middleware('auth')->group(function (){
     Route::delete('/kelola-petugas-hapus-{id}', [KelolaPetugasController::class, 'destroy']);
 });
 
->>>>>>> Stashed changes
+
 require __DIR__ . '/auth.php';
