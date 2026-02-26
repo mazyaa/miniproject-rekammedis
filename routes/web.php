@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KelolaDesaController;
 use App\Http\Controllers\KelolaJenisKelaminController;
+use App\Http\Controllers\KelolaPetugasController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Desa;
 use App\Models\JenisKelamin;
@@ -58,10 +59,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// ! ========================================= REKAM MEDIS ==============================================================
 
 Route::middleware('auth')->group(function (){
-
+    Route::get('/kelola-petugas', [KelolaPetugasController::class, 'index']);
+    Route::post('/kelola-petugas-tambah', [KelolaPetugasController::class, 'store']);
+    Route::put('/kelola-petugas-edit-{id}', [KelolaPetugasController::class, 'update']);
+    Route::delete('/kelola-petugas-hapus-{id}', [KelolaPetugasController::class, 'destroy']);
 });
+
 
 require __DIR__ . '/auth.php';

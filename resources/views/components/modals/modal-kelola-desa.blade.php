@@ -1,4 +1,4 @@
-@if ($type === "tambah")
+@if ($type === 'tambah')
     {{-- ! Modal Tambah --}}
     <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
