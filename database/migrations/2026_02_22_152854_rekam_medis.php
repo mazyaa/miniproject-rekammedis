@@ -22,7 +22,7 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table->foreignId('petugas_id')
-                ->constrained('users')
+                ->constrained('users') 
                 ->onDelete('cascade');
 
             $table->text('kepatuhan')->nullable();

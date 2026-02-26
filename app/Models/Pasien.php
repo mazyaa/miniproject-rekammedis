@@ -37,6 +37,7 @@ class Pasien extends Model
         return $this->belongsTo(JenisKelamin::class);
     }
 
+    // using hasMany because one patient can have multiple medical records
     public function rekamMedis()
     {
         return $this->hasMany(RekamMedis::class);
