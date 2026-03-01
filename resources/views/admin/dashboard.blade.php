@@ -1,127 +1,114 @@
 <x-app-layout>
-    <div class="app-content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0 text-primary fw-bold">{{ $title }}</h3>
+    {{-- Custom Dashboard Styles --}}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+
+    <div class="dashboard-content">
+        {{-- Dashboard Header --}}
+        <x-dashboard.header
+            title="Dashboard"
+            :breadcrumbs="[['label' => 'Dashboard']]"
+        />
+
+        <div class="row g-4">
+            {{-- Welcome Banner --}}
+            <div class="col-lg-6 col-12">
+                <x-dashboard.welcome-banner
+                    bannerTitle="Kami Melayani & Menangani"
+                    bannerHighlight="Dengan Sepenuh Hati"
+                    subtitle="Memberikan pelayanan kesehatan terbaik untuk masyarakat dengan sistem manajemen modern dan terintegrasi."
+                />
+            </div>
+
+            {{-- Chart Card --}}
+            <div class="col-lg-6 col-12">
+                <x-dashboard.chart-card
+                    cardTitle="Grafik"
+                    cardTitleHighlight="Perkembangan Pasien"
+                    chartId="lineChart"
+                />
+            </div>
+        </div>
+
+        {{-- Stats Grid --}}
+        <div class="stats-grid">
+            <x-dashboard.stat-card
+                :value="$totalPasien"
+                label="Total Pasien Terdaftar"
+                icon="bi-people-fill"
+                variant="primary"
+                :trend="($pasienTrend >= 0 ? '+' : '') . $pasienTrend . '% bulan ini'"
+                :trendDirection="$pasienTrend >= 0 ? 'up' : 'down'"
+                link="/kelola-pasien"
+                linkText="Kelola Pasien"
+            />
+
+            <x-dashboard.stat-card
+                :value="$totalKonsultasi"
+                label="Total Konsultasi"
+                icon="bi-person-check-fill"
+                variant="success"
+                :trend="($konsultasiTrend >= 0 ? '+' : '') . $konsultasiTrend . '% bulan ini'"
+                :trendDirection="$konsultasiTrend >= 0 ? 'up' : 'down'"
+                link="/kelola-rekamedis"
+                linkText="Lihat Detail"
+            />
+
+            <x-dashboard.stat-card
+                :value="$totalPetugas"
+                label="Total Data Petugas"
+                icon="bi-person-fill-gear"
+                variant="warning"
+                link="/kelola-petugas"
+                linkText="Kelola Petugas"
+            />
+        </div>
+
+        <div class="row g-4 mt-2">
+            {{-- Quick Actions --}}
+            <div class="col-lg-7 col-12">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Aksi <em>Cepat</em></h3>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="/kelola-pasien" class="quick-action-btn">
+                            <i class="bi bi-person-plus-fill"></i>
+                            Tambah Pasien
+                        </a>
+                        <a href="/kelola-rekamedis" class="quick-action-btn">
+                            <i class="bi bi-heart-pulse-fill"></i>
+                            Rekam Medis
+                        </a>
+                        <a href="/kelola-desa" class="quick-action-btn">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Data Desa
+                        </a>
+                        <a href="/kelola-petugas" class="quick-action-btn">
+                            <i class="bi bi-person-badge-fill"></i>
+                            Data Petugas
+                        </a>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                   <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="/dashboard" class="text-black-50">Home</a></li>
-                        <li class="breadcrumb-item active @if (request()->path() == 'dashboard') text-primary @endif"
-                            aria-current="page">{{ $title }}</li>
-                    </ol>
-                </div>
+            </div>
+
+            {{-- Activity Card --}}
+            <div class="col-lg-5 col-12">
+                <x-dashboard.activity-card :activities="$activities" />
             </div>
         </div>
     </div>
-    <div class="app-content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 col-12">
-                    <div class="small-box p-2 py-4">
-                        <div class="inner">
-                            <div class="row align-items-center">
-                                <!-- Teks -->
-                                <div class="col-md-6 text-primary">
-                                    <h4 class="fw-bold">
-                                        Kami Melayani & Menangani
-                                        Dengan Sepenuh Hati
-                                    </h4>
-                                    <p class="mb-0 opacity-75">
-                                        Memberikan pelayanan kesehatan terbaik untuk masyarakat.
-                                    </p>
-                                </div>
 
-                                <!-- Gambar -->
-                                <div class="col-md-6 text-center">
-                                    <img class="img-fluid" style="max-width: 250px;"
-                                        src="{{ asset('assets/img/Medical care-rafiki.svg') }}" alt="Ilustrasi Medical">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-12">
-                    <div class="small-box">
-                        <div class="inner">
-                            <h5 class="fw-bold text-primary mb-4">Grafik Perkembangan Pasien</h5>
-                            <canvas id="lineChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-12">
-                    <div class="small-box text-bg-primary">
-                        <div class="inner">
-                            <h3>{{ $totalPasien }}</h3>
-                            <p>Jumlah Pasien</p>
-                        </div>
-                        <i class="small-box-icon bi bi-people-fill"></i>
-                        <a href="/kelola-pasien"
-                            class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                            Add
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="small-box text-bg-success">
-                        <div class="inner">
-                            <h3>100<sup class="fs-5"></sup></h3>
-                            <p>Jumlah Pasien Konsultasi</p>
-                        </div>
-                        <i class="small-box-icon bi bi-person-check-fill"></i>
-                        <a href="#"
-                            class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                            Add
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="small-box text-bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-                            <p>Jumlah Data Dokter</p>
-                        </div>
-                        <i class="small-box-icon bi bi-person-fill-gear"></i>
-                        <a href="#"
-                            class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover">
-                            Add
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- ! Script Chart Start --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    {{-- Chart Data from Backend --}}
     <script>
-        const ctx = document.getElementById('lineChart');
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-                datasets: [{
-                    label: 'Jumlah Pasien',
-                    data: [12, 19, 15, 25, 22, 30],
-                    borderColor: '#0d6efd',
-                    backgroundColor: 'rgba(13,110,253,0.2)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: true }
-                }
-            }
-        });
+        window.chartConfig = {
+            labels: @json($chartLabels),
+            data: @json($chartData)
+        };
     </script>
-    {{-- ! Script Chart End --}}
+
+    {{-- Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- Dashboard JS --}}
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 
 </x-app-layout>
