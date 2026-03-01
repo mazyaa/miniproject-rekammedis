@@ -29,6 +29,9 @@ class PasienSeeder extends Seeder
             // Ambil jenis kelamin random dari database
             $jenisKelamin = JenisKelamin::inRandomOrder()->first();
 
+            // Spread created_at across last 6 months for chart data
+            $createdAt = Carbon::now()->subMonths(rand(0, 5))->subDays(rand(0, 28));
+
             DB::table('pasien')->insert([
                 'tanggal_lahir' => $tanggalLahir,
                 'usia' => $tanggalLahir->age,
@@ -41,8 +44,8 @@ class PasienSeeder extends Seeder
                 'keterangan' => $faker->randomElement(['Hipertensi', 'Normal']),
                 'desa_id' => Desa::inRandomOrder()->first()->id,
                 'jenis_kelamin_id' => $jenisKelamin->id,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
             ]);
         }
     }

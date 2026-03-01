@@ -23,5 +23,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('Admin123')
         ]);
+
+        // Run RekamMedisSeeder after User is created
+        $this->call([
+            RekamMedisSeeder::class
+        ]);
     }
 }
