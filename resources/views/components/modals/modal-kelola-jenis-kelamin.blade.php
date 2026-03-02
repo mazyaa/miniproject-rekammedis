@@ -31,7 +31,7 @@
     </div>
 @elseif (($type === 'edit') && isset($d))
     {{-- ! Modal Edit --}}
-    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-{{ $d->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
@@ -44,12 +44,12 @@
                     <div class="modal-body">
                         <div class="card-body">
                             <div class="row mb-3">
-                                <label for="deskripsi" class="col-sm-3 col-form-label text-primary"
+                                <label for="deskripsi-{{ $d->id }}" class="col-sm-3 col-form-label text-primary"
                                     style="font-size: 15px">jenis-kelamin
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" name="deskripsi" class="form-control border-none"
-                                        style="font-size: 13px" placeholder="Masukan Nama jenis-kelamin" id="deskripsi"
+                                        style="font-size: 13px" placeholder="Masukan Nama jenis-kelamin" id="deskripsi-{{ $d->id }}"
                                         value="{{ $d->deskripsi }}" />
                                 </div>
                             </div>
