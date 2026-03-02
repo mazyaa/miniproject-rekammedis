@@ -1,4 +1,6 @@
 <x-app-layout>
+
+    {{-- HEADER --}}
     <div class="app-content-header">
         <div class="container-fluid">
             <div class="row">
@@ -7,158 +9,209 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="/dashboard" class="text-black-50">Home</a></li>
-                        <li class="breadcrumb-item active @if (request()->path() == 'kelola-pasien') text-primary @endif"
-                            aria-current="page">Kelola Pasien</li>
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Kelola Pasien</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- CONTENT --}}
     <div class="app-content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah"> <i
-                                class="bi bi-plus"></i> Tambah</button>
-                    </div>
-                    <x-modals.modal-kelola-pasien judul="Tambah Data Pasien" type="tambah" :desa="$desa"
-                        :jeniskelamin="$jeniskelamin" />
-                    <div class="card-body p-0 rounded">
-                        <table id="pasien" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10px">No</th>
-                                    <th>Nama Pasien</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Usia</th>
-                                    <th>Desa</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Opsi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $d)
-                                    <tr class="align-middle">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $d->nama_pasien }}</td>
-                                        <td>{{ $d->jenisKelamin->deskripsi }}</td>
-                                        <td>{{ $d->usia }}</td>
-                                        <td>{{ $d->desa->nama_desa }}</td>
-                                        <td class="text-center">
-                                            @if ($d['keterangan'] === 'Hipertensi')
-                                                <span
-                                                    class="bg-danger text-light p-1 rounded-5 small">{{ $d->keterangan }}</span>
-                                            @else
-                                                <span
-                                                    class="bg-success text-light p-1 rounded-5 small">{{ $d->keterangan }}</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                                {{-- ! DETAIL --}}
-                                                <button
-                                                    class="btn btn-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
-                                                    style="width: 20px; height: 20px;" data-bs-toggle="modal"
-                                                    data-bs-target="#detail-{{ $d->id }}">
-                                                    <i class="bi bi-eye text-light" style="font-size: 10px"></i>
-                                                </button>
-                                                {{-- ! UPDATE --}}
-                                                <button
-                                                    class="btn btn-primary btn-sm rounded-circle d-flex align-items-center justify-content-center"
-                                                    style="width: 20px; height: 20px;" data-bs-toggle="modal"
-                                                    data-bs-target="#edit-{{ $d->id }}">
-                                                    <i class="bi bi-pencil text-light" style="font-size: 10px"></i>
-                                                </button>
 
-                                                {{-- ! DELETE --}}
-                                                <form action="{{ url('kelola-pasien-hapus-' . $d->id) }}" method="POST"
-                                                    id="delete-form-{{ $d->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" data-id="{{ $d->id }}"
-                                                        data-nama="{{ $d->nama_pasien }}" data-entity="Pasien"
-                                                        class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center"
-                                                        style="width: 20px; height: 20px;">
-                                                        <i class="bi bi-trash" style="font-size: 10px"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        @foreach ($data as $d)
-                            <x-modals.modal-kelola-pasien judul="Detail Data Pasien" type="detail" :pasien="$d"
-                                :desa="$desa" :jeniskelamin="$jeniskelamin" />
-                            <x-modals.modal-kelola-pasien judul="Edit Data Pasien" type="edit" :pasien="$d"
-                                :desa="$desa" :jeniskelamin="$jeniskelamin" />
-                        @endforeach
-                    </div>
-                </div>
+            {{-- TOOLBAR --}}
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <input type="text" id="searchPasien" class="form-control w-auto"
+                    placeholder="Cari nama pasien...">
+
+                <select id="filterStatus" class="form-select w-auto">
+                    <option value="">Semua Status</option>
+                    <option value="Hipertensi">Hipertensi</option>
+                    <option value="Normal">Normal</option>
+                </select>
+
+                <button class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#tambahPasien">
+                    <i class="bi bi-plus"></i> Tambah
+                </button>
             </div>
+
+            {{-- MODAL TAMBAH --}}
+            <x-modals.modal-kelola-pasien
+                judul="Tambah Data Pasien"
+                type="tambah"
+                :desa="$desa"
+                :jeniskelamin="$jeniskelamin" />
+
+            {{-- CARD CONTAINER --}}
+            <div id="pasienCards" class="row g-4"></div>
+
+            {{-- HIDDEN TABLE (ENGINE) --}}
+            <table id="pasienTable" class="d-none">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Status</th>
+                        <th>HTML</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $d)
+                        <tr>
+                            <td>{{ $d->nama_pasien }}</td>
+                            <td>{{ $d->keterangan }}</td>
+                            <td>
+                                {{-- CARD --}}
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="modern-card">
+
+                                        @php
+                                            $gender = strtolower($d->jenisKelamin->deskripsi ?? '');
+
+                                            if ($gender == 'laki-laki' || $gender == 'cowo') {
+                                                $avatars = ['avatar.png', 'avatar4.png', 'avatar5.png'];
+                                            } else {
+                                                $avatars = ['avatar2.png', 'avatar3.png'];
+                                            }
+
+                                            $randomAvatar = $avatars[array_rand($avatars)];
+                                        @endphp
+
+                                        <img src="{{ asset('assets/img/' . $randomAvatar) }}"
+                                            class="avatar-img">
+
+                                        <h5 class="patient-name">{{ $d->nama_pasien }}</h5>
+
+                                        <div class="patient-info">
+                                            <span>{{ $d->jenisKelamin->deskripsi ?? '-' }}</span>
+                                            <span>{{ $d->usia }} Tahun</span>
+                                            <span>{{ $d->desa->nama_desa ?? '-' }}</span>
+                                        </div>
+
+                                        <span class="status-badge {{ $d->keterangan === 'Hipertensi' ? 'danger' : 'success' }}">
+                                            {{ $d->keterangan }}
+                                        </span>
+
+                                        <div class="card-actions">
+
+                                            {{-- DETAIL --}}
+                                            <button class="btn btn-warning btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#detail-{{ $d->id }}">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+
+                                            {{-- EDIT --}}
+                                            <button class="btn btn-primary btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#edit-{{ $d->id }}">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+
+                                            {{-- DELETE --}}
+                                            <form method="POST"
+                                                action="{{ url('kelola-pasien-hapus-' . $d->id) }}"
+                                                class="delete-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- MODAL DETAIL --}}
+                                <x-modals.modal-kelola-pasien
+                                    judul="Detail Pasien"
+                                    type="detail"
+                                    :d="$d"
+                                    :desa="$desa"
+                                    :jeniskelamin="$jeniskelamin" />
+
+                                {{-- MODAL EDIT --}}
+                                <x-modals.modal-kelola-pasien
+                                    judul="Edit Pasien"
+                                    type="edit"
+                                    :d="$d"
+                                    :desa="$desa"
+                                    :jeniskelamin="$jeniskelamin" />
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
         </div>
     </div>
+
 </x-app-layout>
 
 <script>
-    $(document).ready(function() {
-        new DataTable('#pasien', {
-            paging: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            responsive: true,
+$(document).ready(function () {
+
+    const table = $('#pasienTable').DataTable({
+        pageLength: 6,
+        dom: 'tp'
+    });
+
+    function renderCards() {
+        const container = $('#pasienCards');
+        container.html('');
+
+        table.rows({ page: 'current' }).every(function () {
+            container.append(this.data()[2]);
+        });
+    }
+
+    table.on('draw', renderCards);
+    renderCards();
+
+    // Live Search
+    $('#searchPasien').on('keyup', function () {
+        table.search(this.value).draw();
+    });
+
+    // Filter Status
+    $('#filterStatus').on('change', function () {
+        table.column(1).search(this.value).draw();
+    });
+
+    // Delete Confirmation
+    $(document).on('submit', '.delete-form', function (e) {
+        e.preventDefault();
+        const form = this;
+
+        Swal.fire({
+            title: 'Yakin hapus data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Hapus'
+        }).then(result => {
+            if (result.isConfirmed) form.submit();
         });
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // ! Konfirmasi Delete
-        document.querySelectorAll('form[id^="delete-form-"]').forEach(function (form) {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const namaData = form.querySelector('button').getAttribute('data-nama');
-                const entity = form.querySelector('button').getAttribute('data-entity');
-
-                Swal.fire({
-                    title: 'Konfirmasi Penghapusan',
-                    text: `Apakah Anda yakin ingin menghapus ${entity} dengan nama "${namaData}"?`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, Hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
-                });
-            });
+    // Flash Message
+    if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: "{{ session('success') }}"
         });
+    endif
 
-        // ! Flash Message Success
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: "{{ session('success') }}",
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#28a745'
-            });
-        @endif
+    if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ session('error') }}"
+        });
+    endif
 
-        // ! Flash Message Error
-        @if(session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: "{{ session('error') }}",
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#dc3545'
-            });
-        @endif
-    });
+});
 </script>

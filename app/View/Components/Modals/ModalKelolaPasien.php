@@ -16,10 +16,12 @@ class ModalKelolaPasien extends Component
         public $type = 'default',
         public $jeniskelamin,
         public $desa,
+        public $d = null,
         public $pasien = null
     ) {
         $this->judul = $judul;
         $this->type = $type;
+        $this->d = $d;
         $this->jeniskelamin = $jeniskelamin;
         $this->desa = $desa;
         $this->pasien = $pasien;
