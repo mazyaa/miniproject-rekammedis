@@ -77,7 +77,7 @@
      * Typing Effect
      * ========================================== */
     function typeText() {
-        var text  = 'Oops! Halaman Tidak Ditemukan';
+        var text  = window.errorTitle || 'Halaman Tidak Ditemukan';
         var el    = document.getElementById('typed-text');
         var index = 0;
 

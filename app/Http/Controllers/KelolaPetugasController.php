@@ -58,9 +58,9 @@ class KelolaPetugasController extends Controller
         }
     }
 
-    public function destroy(Number $id) {
+    public function destroy($id) {
         try {
-            $petugas = User::findOrFail($id);
+            $petugas = User::findOrFail((int)$id);
             $petugas->delete();
 
             return redirect('/kelola-petugas')->with(['success' => "Data Petugas {$petugas->name} Berhasil Dihapus"]);

@@ -414,3 +414,69 @@
         justify-content: center;
     }
 }
+
+/* ============================================
+ * Error Page Variants (Color Schemes)
+ * ============================================ */
+
+/* --- 403 Forbidden (Orange/Red) --- */
+.error-forbidden {
+    --err-primary: #f97316;
+    --err-primary-glow: rgba(249, 115, 22, 0.4);
+    --err-accent: #dc2626;
+    --err-accent-glow: rgba(220, 38, 38, 0.3);
+}
+
+/* --- 419 Session Expired (Amber) --- */
+.error-session {
+    --err-primary: #f59e0b;
+    --err-primary-glow: rgba(245, 158, 11, 0.4);
+    --err-accent: #d97706;
+    --err-accent-glow: rgba(217, 119, 6, 0.3);
+}
+
+/* --- 429 Rate Limit (Yellow/Orange) --- */
+.error-ratelimit {
+    --err-primary: #eab308;
+    --err-primary-glow: rgba(234, 179, 8, 0.4);
+    --err-accent: #f97316;
+    --err-accent-glow: rgba(249, 115, 22, 0.3);
+}
+
+/* --- 500 Server Error (Red) --- */
+.error-server {
+    --err-primary: #ef4444;
+    --err-primary-glow: rgba(239, 68, 68, 0.4);
+    --err-accent: #b91c1c;
+    --err-accent-glow: rgba(185, 28, 28, 0.3);
+}
+
+/* --- 503 Maintenance (Purple/Indigo) --- */
+.error-maintenance {
+    --err-primary: #8b5cf6;
+    --err-primary-glow: rgba(139, 92, 246, 0.4);
+    --err-accent: #6366f1;
+    --err-accent-glow: rgba(99, 102, 241, 0.3);
+}
+
+/* --- 401 Unauthenticated (Cyan/Blue) --- */
+.error-auth {
+    --err-primary: #06b6d4;
+    --err-primary-glow: rgba(6, 182, 212, 0.4);
+    --err-accent: #0284c7;
+    --err-accent-glow: rgba(2, 132, 199, 0.3);
+}
+
+/* ---------- Status Dot Variants ---------- */
+.diagnostic-info .badge-custom .dot.warning {
+    background: #eab308;
+}
+
+.diagnostic-info .badge-custom .dot.danger {
+    background: #ef4444;
+}
+
+.diagnostic-info .badge-custom .dot.info {
+    background: #3b82f6;
+}
+

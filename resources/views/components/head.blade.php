@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
     integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
 <!--begin::Navbar & Theme Styles (Modern & Clean - Single File - LAST to override all)-->
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 <!--end::Navbar & Theme Styles-->
 <!--begin::Dashboard Styles-->
 <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" />

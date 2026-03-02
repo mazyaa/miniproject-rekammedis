@@ -44,8 +44,30 @@
                 :desa="$desa"
                 :jeniskelamin="$jeniskelamin" />
 
+            {{-- EMPTY STATE --}}
+            @if ($data->isEmpty())
+                <x-empty-state
+                    icon="bi-people"
+                    title="Belum Ada Data Pasien"
+                    message="Data pasien masih kosong. Mulai tambahkan data pasien<br>pertama untuk memulai pengelolaan rekam medis."
+                    actionText="Tambah Pasien Pertama"
+                    actionTarget="#tambahPasien" />
+            @endif
+
             {{-- CARD CONTAINER --}}
             <div id="pasienCards" class="row g-4"></div>
+
+            {{-- NO SEARCH RESULT STATE (shown by JS) --}}
+            <x-empty-state
+                id="noResultState"
+                icon="bi-search"
+                variant="search"
+                title="Pasien Tidak Ditemukan"
+                message="Tidak ada pasien yang cocok dengan pencarian atau filter Anda.<br>Coba gunakan kata kunci lain atau reset filter."
+                actionText="Reset Pencarian"
+                actionId="resetFilterBtn"
+                actionStyle="outline"
+                :hidden="true" />
 
             {{-- HIDDEN TABLE (ENGINE) --}}
             <table id="pasienTable" class="d-none">
@@ -63,7 +85,7 @@
                             <td>{{ $d->keterangan }}</td>
                             <td>
                                 {{-- CARD --}}
-                                <div class="col-md-6 col-lg-4">
+                                <div class="col-md-6 col-lg-4 mb-4">
                                     <div class="modern-card">
 
                                         @php
@@ -158,13 +180,23 @@ $(document).ready(function () {
         dom: 'tp'
     });
 
+    // for shoeing cards instead of table rows if data 
     function renderCards() {
         const container = $('#pasienCards');
         container.html('');
 
-        table.rows({ page: 'current' }).every(function () {
-            container.append(this.data()[2]);
-        });
+        const rows = table.rows({ page: 'current' });
+
+        if (rows.count() === 0 && table.data().count() > 0) {
+            $('#noResultState').show();
+            container.hide();
+        } else {
+            $('#noResultState').hide();
+            container.show();
+            rows.every(function () {
+                container.append(this.data()[2]);
+            });
+        }
     }
 
     table.on('draw', renderCards);
@@ -178,6 +210,13 @@ $(document).ready(function () {
     // Filter Status
     $('#filterStatus').on('change', function () {
         table.column(1).search(this.value).draw();
+    });
+
+    // Reset Filter
+    $('#resetFilterBtn').on('click', function () {
+        $('#searchPasien').val('');
+        $('#filterStatus').val('');
+        table.search('').column(1).search('').draw();
     });
 
     // Delete Confirmation
