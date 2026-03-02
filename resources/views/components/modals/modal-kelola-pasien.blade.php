@@ -1,6 +1,6 @@
 @if ($type === 'tambah')
     {{-- ! Modal Tambah --}}
-    <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahPasien" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
@@ -127,9 +127,9 @@
         </div>
     </div>
 
-@elseif (($type === 'detail') && isset($pasien))
+@elseif (($type === 'detail') && isset($d))
     {{-- ! Modal Detail --}}
-    <div class="modal fade" id="detail-{{ $pasien->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="detail-{{ $d->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
@@ -142,41 +142,41 @@
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Nama Pasien
                             </label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->nama_pasien }}</p>
+                                <p style="font-size: 13px">{{ $d->nama_pasien }}</p>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">NIK
                             </label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->nik }}</p>
+                                <p style="font-size: 13px">{{ $d->nik }}</p>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Jenis Kelamin
                             </label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->jenisKelamin->deskripsi }}</p>
+                                <p style="font-size: 13px">{{ $d->jenisKelamin->deskripsi }}</p>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Tanggal Lahir
                             </label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->tanggal_lahir->format('d-m-Y') }}</p>
+                                <p style="font-size: 13px">{{ $d->tanggal_lahir->format('d-m-Y') }}</p>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Usia</label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->usia }} Tahun</p>
+                                <p style="font-size: 13px">{{ $d->usia }} Tahun</p>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Alamat</label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->alamat }}</p>
+                                <p style="font-size: 13px">{{ $d->alamat }}</p>
                             </div>
                         </div>
 
@@ -184,24 +184,24 @@
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Desa
                             </label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->desa->nama_desa }}</p>
+                                <p style="font-size: 13px">{{ $d->desa->nama_desa }}</p>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">No. HP</label>
                             <div class="col-sm-9">
-                                <p style="font-size: 13px">{{ $pasien->no_hp ?? '-' }}</p>
+                                <p style="font-size: 13px">{{ $d->no_hp ?? '-' }}</p>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label text-primary" style="font-size: 15px">Keterangan</label>
                             <div class="col-sm-9">
-                                @if ($pasien->keterangan === 'Hipertensi')
-                                    <span class="bg-danger text-light p-1 rounded-5 small">{{ $pasien->keterangan }}</span>
+                                @if ($d->keterangan === 'Hipertensi')
+                                    <span class="bg-danger text-light p-1 rounded-5 small">{{ $d->keterangan }}</span>
                                 @else
-                                    <span class="bg-success text-light p-1 rounded-5 small">{{ $pasien->keterangan }}</span>
+                                    <span class="bg-success text-light p-1 rounded-5 small">{{ $d->keterangan }}</span>
                                 @endif
                             </div>
                         </div>
@@ -215,16 +215,16 @@
         </div>
     </div>
 
-@elseif (($type === 'edit') && isset($pasien))
+@elseif (($type === 'edit') && isset($d))
     {{-- ! Modal Edit --}}
-    <div class="modal fade" id="edit-{{ $pasien->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-{{ $d->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <h1 class="modal-title text-light fs-5" id="exampleModalLabel">{{ $judul }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ url('/kelola-pasien-edit-' . $pasien->id) }}" method="POST">
+                <form action="{{ url('/kelola-pasien-edit-' . $d->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -235,7 +235,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" name="nama_pasien" class="form-control border-none"
-                                        style="font-size: 13px" id="nama_pasien" value="{{ $pasien->nama_pasien }}"
+                                        style="font-size: 13px" id="nama_pasien" value="{{ $d->nama_pasien }}"
                                         required />
                                 </div>
                             </div>
@@ -244,7 +244,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" name="nik" class="form-control border-none"
-                                        style="font-size: 13px" id="nik" value="{{ $pasien->nik }}" required />
+                                        style="font-size: 13px" id="nik" value="{{ $d->nik }}" required />
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -257,7 +257,7 @@
                                         <option style="font-size: 12px" selected disabled>Pilih Opsi</option>
                                         @foreach ($jeniskelamin as $jk)
                                             <option style="font-size: 12px" value="{{ $jk->id }}"
-                                                {{ $pasien->jenis_kelamin_id == $jk->id ? 'selected' : '' }}>
+                                                {{ $d->jenis_kelamin_id == $jk->id ? 'selected' : '' }}>
                                                 {{ $jk->deskripsi }}</option>
                                         @endforeach
                                     </select>
@@ -270,7 +270,7 @@
                                 <div class="col-sm-9">
                                     <input type="date" name="tanggal_lahir" class="form-control border-none"
                                         style="font-size: 13px" id="tanggal_lahir"
-                                        value="{{ $pasien->tanggal_lahir->format('Y-m-d') }}" required />
+                                        value="{{ $d->tanggal_lahir->format('Y-m-d') }}" required />
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -278,7 +278,7 @@
                                     style="font-size: 15px">Usia</label>
                                 <div class="col-sm-9">
                                     <input type="number" name="usia" class="form-control border-none"
-                                        style="font-size: 13px" id="usia" value="{{ $pasien->usia }}" required />
+                                        style="font-size: 13px" id="usia" value="{{ $d->usia }}" required />
                                 </div>
                             </div>
 
@@ -287,7 +287,7 @@
                                     style="font-size: 15px">Alamat</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="alamat" class="form-control border-none"
-                                        style="font-size: 13px" id="alamat" value="{{ $pasien->alamat }}" required />
+                                        style="font-size: 13px" id="alamat" value="{{ $d->alamat }}" required />
                                 </div>
                             </div>
 
@@ -300,7 +300,7 @@
                                         <option style="font-size: 12px" selected disabled>Pilih Opsi</option>
                                         @foreach ($desa as $d)
                                             <option style="font-size: 12px" value="{{ $d->id }}"
-                                                {{ $pasien->desa_id == $d->id ? 'selected' : '' }}>
+                                                {{ $d->desa_id == $d->id ? 'selected' : '' }}>
                                                 {{ $d->nama_desa }}</option>
                                         @endforeach
                                     </select>
@@ -312,7 +312,7 @@
                                     style="font-size: 15px">No. HP</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="no_hp" class="form-control border-none"
-                                        style="font-size: 13px" id="no_hp" value="{{ $pasien->no_hp }}" />
+                                        style="font-size: 13px" id="no_hp" value="{{ $d->no_hp }}" />
                                 </div>
                             </div>
 
@@ -323,9 +323,9 @@
                                     <select class="form-select" name="keterangan" style="font-size: 12px" required>
                                         <option style="font-size: 12px" selected disabled>Pilih Status</option>
                                         <option style="font-size: 12px" value="Sehat"
-                                            {{ $pasien->keterangan == 'Sehat' ? 'selected' : '' }}>Sehat</option>
+                                            {{ $d->keterangan == 'Sehat' ? 'selected' : '' }}>Sehat</option>
                                         <option style="font-size: 12px" value="Hipertensi"
-                                            {{ $pasien->keterangan == 'Hipertensi' ? 'selected' : '' }}>Hipertensi
+                                            {{ $d->keterangan == 'Hipertensi' ? 'selected' : '' }}>Hipertensi
                                         </option>
                                     </select>
                                 </div>
