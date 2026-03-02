@@ -1,6 +1,4 @@
 <x-app-layout>
-    {{-- Custom Dashboard Styles --}}
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
     <div class="dashboard-content">
         {{-- Dashboard Header --}}

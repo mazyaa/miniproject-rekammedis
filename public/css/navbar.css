@@ -25,8 +25,8 @@
     --text-light: #64748b;
 }
 
-* {
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
+body, html {
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* ===== BODY & GLOBAL ===== */
@@ -274,14 +274,15 @@ html, body {
 }
 
 .table thead {
-    background: var(--primary-gradient);
+    background: var(--primary-gradient) !important;
 }
 
 .table thead th {
-    color: var(--white);
-    font-weight: 600;
-    padding: 14px 16px;
-    border: none;
+    color: var(--white) !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+    padding: 14px 16px !important;
+    border: none !important;
     text-transform: uppercase;
     font-size: 12px;
     letter-spacing: 0.5px;
@@ -340,6 +341,26 @@ html, body {
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 16px;
+}
+
+/* DataTables specific thead styling */
+.dataTables_wrapper .table thead,
+.dt-container .table thead,
+table.dataTable thead {
+    background: var(--primary-gradient) !important;
+}
+
+.dataTables_wrapper .table thead th,
+.dt-container .table thead th,
+table.dataTable thead th {
+    color: var(--white) !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+    padding: 14px 16px !important;
+    border: none !important;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
 .dataTables_length label, .dataTables_filter label {

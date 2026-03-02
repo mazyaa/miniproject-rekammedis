@@ -1,10 +1,9 @@
-/*
- * Dashboard Modern Styles
- * Matching the login page design system
- * Colors: #0ea5e9 (sky blue), #0284c7 (darker blue), #0c4a7a (dark navy)
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap');
+
+/* Ensure fonts are available */
+html {
+    font-display: swap;
+}
 
 /* ===== DASHBOARD LAYOUT ===== */
 .dashboard-content {
@@ -60,9 +59,10 @@
 }
 
 .dashboard-header h1 em {
-    font-family: 'Instrument Serif', serif;
+    font-family: 'Instrument Serif', serif !important;
     font-style: italic;
     color: #0ea5e9;
+    font-weight: 700;
 }
 
 .breadcrumb-modern {
@@ -131,9 +131,10 @@
 }
 
 .welcome-banner .welcome-text h2 em {
-    font-family: 'Instrument Serif', serif;
+    font-family: 'Instrument Serif', serif !important;
     font-style: italic;
     color: #0ea5e9;
+    font-weight: 700;
 }
 
 .welcome-banner .welcome-text p {
@@ -331,9 +332,10 @@
 }
 
 .chart-card .chart-title em {
-    font-family: 'Instrument Serif', serif;
+    font-family: 'Instrument Serif', serif !important;
     font-style: italic;
     color: #0ea5e9;
+    font-weight: 700;
 }
 
 .chart-card .chart-period {
