@@ -26,7 +26,9 @@
 {{-- Plus Jakarta Sans & Instrument Serif for modern UI --}}
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet" />
 <!--end::Fonts-->
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
@@ -39,9 +41,9 @@
 <!--begin::Required Plugin(AdminLTE)-->
 <link rel="stylesheet" href="{{ asset('./assets/css/adminlte.css') }}" />
 <!--end::Required Plugin(AdminLTE)-->
-<!--begin::Modern Navbar Styles-->
+<!--begin::Navbar & Theme Styles (Modern & Clean - Single File)-->
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
-<!--end::Modern Navbar Styles-->
+<!--end::Navbar & Theme Styles-->
 <!-- apexcharts -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
     integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
@@ -63,13 +65,16 @@
 
 {{-- DATA TABLES --}}
 <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/2.3.7/js/dataTables.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/2.3.7/js/dataTables.bootstrap5.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.8/js/dataTables.responsive.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.8/js/responsive.bootstrap5.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css"
+    crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.bootstrap5.css" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.bootstrap5.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.bootstrap5.css"
+    crossorigin="anonymous" />
 
 <!--end::Third Party Libraries (Error Pages)-->

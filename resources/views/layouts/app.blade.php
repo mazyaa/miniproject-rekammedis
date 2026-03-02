@@ -23,8 +23,7 @@
                 <!--begin::User Menu-->
                 <div class="navbar-user-section ms-auto d-flex align-items-center">
                     <div class="user-greeting me-3">
-                        <span class="greeting-text">Halo, </span>
-                        <span class="greeting-name">{{ Auth::user()->username ?? 'User' }}!</span>
+                        <span class="greeting-text">Halo, <span class="greeting-name">{{ Auth::user()->username ?? 'User' }}!</span></span>
                     </div>
 
                     <form method="POST" action="{{ route('logout') }}" class="d-inline">

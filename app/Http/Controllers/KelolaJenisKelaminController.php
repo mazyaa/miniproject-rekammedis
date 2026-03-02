@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisKelamin;
+use App\Models\Pasien;
 use Illuminate\Http\Request;
 
 class KelolaJenisKelaminController extends Controller
@@ -35,7 +36,29 @@ class KelolaJenisKelaminController extends Controller
     public function index()
     {
         $data = JenisKelamin::all();
-        return view('admin.JenisKelamin.kelola-jenis-kelamin', compact('data'));
+        $title = 'Kelola Jenis Kelamin';
+
+        // Hitung jumlah pasien dan tambahkan styling berdasarkan jenis kelamin
+        foreach ($data as $d) {
+            $d->count = Pasien::where('jenis_kelamin_id', $d->id)->count();
+
+            // Set styling berdasarkan jenis kelamin
+            if ($d->deskripsi == 'Laki-laki') {
+                $d->bgGradient = 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)';
+                $d->iconColor = '#0284c7';
+                $d->textColor = '#0c4a6e';
+                $d->icon = 'bi-gender-male';
+                $d->subText = 'Pria dewasa/remaja';
+            } else {
+                $d->bgGradient = 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)';
+                $d->iconColor = '#ec4899';
+                $d->textColor = '#831843';
+                $d->icon = 'bi-gender-female';
+                $d->subText = 'Wanita dewasa/remaja';
+            }
+        }
+
+        return view('admin.JenisKelamin.kelola-jenis-kelamin', compact('data', 'title'));
     }
 
     // ! ======================= UPDATE ===================================
@@ -67,9 +90,9 @@ class KelolaJenisKelaminController extends Controller
         }
     }
 
-        // ! ======================= DELETE ===================================
+    // ! ======================= DELETE ===================================
 
-     public function destroy($id)
+    public function destroy($id)
     {
         JenisKelamin::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Data berhasil dihapus');
