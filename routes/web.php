@@ -1,15 +1,12 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelolaDesaController;
 use App\Http\Controllers\KelolaJenisKelaminController;
 use App\Http\Controllers\KelolaPasienController;
 use App\Http\Controllers\KelolaPetugasController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Pasien;
-use App\Models\RekamMedis;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,6 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      * ========== DASHBOARD - HALAMAN UTAMA APLIKASI ==========
      * Route: /dashboard
      * Method: GET
+     * Controller: DashboardController
      * Description: Menampilkan dashboard admin dengan statistik dan ringkasan data
      * Features:
      *  - Total pasien, petugas, dan konsultasi
@@ -58,91 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      *  - Aktivitas terbaru (konsultasi dan pendaftaran pasien)
      *  - Trend analisis perbandingan bulan lalu
      */
-    Route::get('/dashboard', function () {
-        // Total hitungan data
-        $totalPasien = Pasien::count();
-        $totalPetugas = User::count();
-        $totalKonsultasi = RekamMedis::count();
-
-        // Data pasien bulanan untuk grafik (6 bulan terakhir)
-        $chartLabels = [];
-        $chartData = [];
-
-        for ($i = 5; $i >= 0; $i--) {
-            $date = Carbon::now()->subMonths($i);
-            $chartLabels[] = $date->translatedFormat('M');
-            $chartData[] = Pasien::whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->count();
-        }
-
-        // Aktivitas terbaru (5 record terakhir)
-        $recentActivities = RekamMedis::with(['pasien', 'petugas'])
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get()
-            ->map(function ($record) {
-                return [
-                    'icon' => 'bi-clipboard2-pulse',
-                    'variant' => 'success',
-                    'text' => '<strong>' . ($record->pasien->nama_pasien ?? 'Pasien') . '</strong> melakukan konsultasi',
-                    'time' => $record->created_at->diffForHumans()
-                ];
-            });
-
-        // Tambahkan pasien terbaru
-        $recentPatients = Pasien::orderBy('created_at', 'desc')
-            ->take(3)
-            ->get()
-            ->map(function ($patient) {
-                return [
-                    'icon' => 'bi-person-plus',
-                    'variant' => 'primary',
-                    'text' => '<strong>' . $patient->nama_pasien . '</strong> telah terdaftar',
-                    'time' => $patient->created_at->diffForHumans()
-                ];
-            });
-
-        $activities = $recentActivities->merge($recentPatients)
-            ->sortByDesc('time')
-            ->take(5)
-            ->values()
-            ->toArray();
-
-        // Hitung trend (perbandingan dengan bulan lalu)
-        $lastMonthPasien = Pasien::whereMonth('created_at', Carbon::now()->subMonth()->month)
-            ->whereYear('created_at', Carbon::now()->subMonth()->year)
-            ->count();
-        $thisMonthPasien = Pasien::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->count();
-
-        $pasienTrend = $lastMonthPasien > 0
-            ? round((($thisMonthPasien - $lastMonthPasien) / $lastMonthPasien) * 100)
-            : ($thisMonthPasien > 0 ? 100 : 0);
-
-        $lastMonthKonsultasi = RekamMedis::whereMonth('created_at', Carbon::now()->subMonth()->month)
-            ->whereYear('created_at', Carbon::now()->subMonth()->year)
-            ->count();
-        $thisMonthKonsultasi = RekamMedis::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->count();
-
-        $konsultasiTrend = $lastMonthKonsultasi > 0
-            ? round((($thisMonthKonsultasi - $lastMonthKonsultasi) / $lastMonthKonsultasi) * 100)
-            : ($thisMonthKonsultasi > 0 ? 100 : 0);
-
-        return view('admin.dashboard', compact(
-            'totalPasien',
-            'totalPetugas',
-            'totalKonsultasi',
-            'chartLabels',
-            'chartData',
-            'activities',
-            'pasienTrend',
-            'konsultasiTrend'
-        ));
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     /**
      * ========== KELOLA PASIEN - MANAJEMEN DATA PASIEN ==========

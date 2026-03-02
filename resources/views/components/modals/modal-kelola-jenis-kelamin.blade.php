@@ -1,29 +1,29 @@
 @if ($type === "tambah")
     {{-- ! Modal Tambah --}}
-    <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahJKLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h1 class="modal-title text-light fs-5" id="exampleModalLabel">{{ $judul }}</h1>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tambahJKLabel">{{ $judul }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ url('/kelola-jenis-kelamin-tambah') }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <label for="deskripsi" class="col-sm-3 col-form-label text-primary"
-                                    style="font-size: 15px">Jenis Kelamin
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="deskripsi" class="form-control border-none"
-                                        style="font-size: 13px" placeholder="Masukan Nama jenis-kelamin" id="deskripsi" />
-                                </div>
+
+                        <div class="modal-input-wrap">
+                            <label for="deskripsi">Jenis Kelamin</label>
+                            <div class="modal-input-inner">
+                                <svg class="modal-input-icon" viewBox="0 0 24 24">{!! $iconUsers !!}</svg>
+                                <input type="text" name="deskripsi" id="deskripsi" class="modal-field"
+                                    placeholder="Masukkan jenis kelamin" required />
                             </div>
                         </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="modal-btn-cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="modal-btn-submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -31,32 +31,31 @@
     </div>
 @elseif (($type === 'edit') && isset($d))
     {{-- ! Modal Edit --}}
-    <div class="modal fade" id="edit-{{ $d->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-{{ $d->id }}" tabindex="-1" aria-labelledby="editJKLabel-{{ $d->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h1 class="modal-title text-light fs-5" id="exampleModalLabel">{{ $judul }}</h1>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editJKLabel-{{ $d->id }}">{{ $judul }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ url('/kelola-jenis-kelamin-edit-' . $d->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <label for="deskripsi-{{ $d->id }}" class="col-sm-3 col-form-label text-primary"
-                                    style="font-size: 15px">jenis-kelamin
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="deskripsi" class="form-control border-none"
-                                        style="font-size: 13px" placeholder="Masukan Nama jenis-kelamin" id="deskripsi-{{ $d->id }}"
-                                        value="{{ $d->deskripsi }}" />
-                                </div>
+
+                        <div class="modal-input-wrap">
+                            <label for="deskripsi-{{ $d->id }}">Jenis Kelamin</label>
+                            <div class="modal-input-inner">
+                                <svg class="modal-input-icon" viewBox="0 0 24 24">{!! $iconUsers !!}</svg>
+                                <input type="text" name="deskripsi" id="deskripsi-{{ $d->id }}" class="modal-field"
+                                    placeholder="Masukkan jenis kelamin" value="{{ $d->deskripsi }}" required />
                             </div>
                         </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="modal-btn-cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="modal-btn-submit">Simpan</button>
                     </div>
                 </form>
             </div>

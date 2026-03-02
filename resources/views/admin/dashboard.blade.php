@@ -33,9 +33,6 @@
                 :value="$totalPasien"
                 label="Total Pasien Terdaftar"
                 icon="bi-people-fill"
-                variant="primary"
-                :trend="($pasienTrend >= 0 ? '+' : '') . $pasienTrend . '% bulan ini'"
-                :trendDirection="$pasienTrend >= 0 ? 'up' : 'down'"
                 link="/kelola-pasien"
                 linkText="Kelola Pasien"
             />
