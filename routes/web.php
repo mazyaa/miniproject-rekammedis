@@ -6,6 +6,7 @@ use App\Http\Controllers\KelolaJenisKelaminController;
 use App\Http\Controllers\KelolaPasienController;
 use App\Http\Controllers\KelolaPetugasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekamMedisController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -121,6 +122,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/kelola-petugas-tambah', [KelolaPetugasController::class, 'store']);
     Route::put('/kelola-petugas-edit-{id}', [KelolaPetugasController::class, 'update']);
     Route::delete('/kelola-petugas-hapus-{id}', [KelolaPetugasController::class, 'destroy']);
+
+    /**
+     * ========== REKAM MEDIS - MANAJEMEN DATA REKAM MEDIS ==========
+     * Controller: RekamMedisController
+     * Description: CRUD operations untuk manajemen data rekam medis pasien
+     *
+     * Routes:
+     *  GET    /kelola-rekam-medis              - Menampilkan daftar rekam medis
+     *  POST   /kelola-rekam-medis-tambah      - Menambah rekam medis baru
+     *  PUT    /kelola-rekam-medis-edit-{id}   - Mengubah data rekam medis
+     *  DELETE /kelola-rekam-medis-hapus-{id}  - Menghapus rekam medis
+     */
+    Route::get('/rekam-medis', [RekamMedisController::class, 'index']);
+    Route::post('/kelola-rekam-medis-tambah', [RekamMedisController::class, 'store']);
+    Route::put('/kelola-rekam-medis-edit-{id}', [RekamMedisController::class, 'update']);
+    Route::delete('/kelola-rekam-medis-hapus-{id}', [RekamMedisController::class, 'destroy']);
 
     /**
      * ========== PROFILE MANAGEMENT - MANAJEMEN PROFIL PENGGUNA ==========
