@@ -75,7 +75,7 @@
                             menu="Kelola Pasien" />
                         <x-link.navlink route="/kelola-petugas" icon="nav-icon fs-4 bi bi-person-fill-gear"
                             menu="Kelola Petugas" />
-                        <x-link.navlink route="/kelola-rekamedis" icon="nav-icon fs-4 bi bi-heart-pulse-fill"
+                        <x-link.navlink route="/rekam-medis" icon="nav-icon fs-4 bi bi-heart-pulse-fill"
                             menu="Kelola Rekam Medis" />
 
                     </ul>
