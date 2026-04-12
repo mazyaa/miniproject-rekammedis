@@ -2,7 +2,7 @@
     'id' => null,
     'icon' => 'bi-inbox',
     'variant' => 'primary',
-    'title' => 'Data Tidak Ditemukan',
+    'titleEmpty' => 'Data Tidak Ditemukan',
     'message' => 'Belum ada data yang tersedia.',
     'actionText' => null,
     'actionTarget' => null,
@@ -29,7 +29,7 @@
             <i class="bi {{ $icon }}"></i>
         </div>
 
-        <h4 class="empty-state-title">{{ $title }}</h4>
+        <h4 class="empty-state-title">{{ $titleEmpty }}</h4>
 
         <p class="empty-state-text">{!! $message !!}</p>
 
