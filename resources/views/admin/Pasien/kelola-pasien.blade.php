@@ -177,7 +177,8 @@ $(document).ready(function () {
 
     const table = $('#pasienTable').DataTable({
         pageLength: 6,
-        dom: 'tp'
+        dom: 'tp',
+        order: []
     });
 
     // for shoeing cards instead of table rows if data

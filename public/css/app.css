@@ -742,6 +742,21 @@ table.dataTable thead th {
     color: var(--text-dark);
 }
 
+.form-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    padding-right: 40px;
+}
+
+.form-select::-ms-expand {
+    display: none;
+}
+
 .form-control:focus,
 .form-select:focus {
     border-color: var(--primary-light);
@@ -849,7 +864,6 @@ textarea.form-control {
     outline: none;
     transition: all 0.3s ease;
     appearance: none;
-    -webkit-appearance: none;
 }
 
 .modal-input-inner .modal-field::placeholder {
@@ -865,15 +879,20 @@ textarea.form-control {
 
 /* Select dropdown arrow */
 .modal-input-inner select.modal-field {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 40px;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    appearance: auto;
+    background-image: none !important;
+    padding-right: 16px;
     cursor: pointer;
 }
 
+.modal-input-inner select.modal-field::-ms-expand {
+    display: block;
+}
+
 .modal-input-inner select.modal-field:focus {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-image: none !important;
 }
 
 /* Detail value styling */

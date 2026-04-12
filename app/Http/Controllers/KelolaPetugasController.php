@@ -9,7 +9,7 @@ use Illuminate\Support\Number;
 class KelolaPetugasController extends Controller
 {
     public function index() {
-        $data = User::all();
+        $data = User::orderBy('created_at', 'desc')->get();
         return view('admin.petugas.kelola-petugas', compact('data'));
     }
 

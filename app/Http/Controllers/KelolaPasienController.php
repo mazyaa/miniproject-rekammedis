@@ -12,7 +12,7 @@ class KelolaPasienController extends Controller
     // ! ======================= READ ===================================
     public function index()
     {
-        $data = Pasien::all();
+        $data = Pasien::orderBy('created_at', 'desc')->get();
         $desa = Desa::all();
         $jeniskelamin = JenisKelamin::all();
         return view('admin.Pasien.kelola-pasien', compact('data', 'desa', 'jeniskelamin'));

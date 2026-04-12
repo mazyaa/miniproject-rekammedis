@@ -152,7 +152,8 @@ $(document).ready(function () {
 
     const table = $('#petugasTable').DataTable({
         pageLength: 6,
-        dom: 'tp'
+        dom: 'tp',
+        order: []
     });
 
     function renderCards() {

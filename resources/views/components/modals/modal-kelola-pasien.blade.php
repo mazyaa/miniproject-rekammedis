@@ -95,17 +95,18 @@
                             </div>
                         </div>
 
-                        {{-- <div class="modal-input-wrap">
+                        <div class="modal-input-wrap">
                             <label for="keterangan">Keterangan</label>
                             <div class="modal-input-inner">
                                 <svg class="modal-input-icon" viewBox="0 0 24 24">{!! $icons['clipboard'] !!}</svg>
                                 <select name="keterangan" id="keterangan" class="modal-field" required>
                                     <option value="" selected disabled>Pilih status</option>
+                                    <option value="Belum Diperiksa" {{ old('keterangan') == 'Belum Diperiksa' ? 'selected' : '' }}>Belum Diperiksa</option>
                                     <option value="Sehat" {{ old('keterangan') == 'Sehat' ? 'selected' : '' }}>Sehat</option>
                                     <option value="Hipertensi" {{ old('keterangan') == 'Hipertensi' ? 'selected' : '' }}>Hipertensi</option>
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -315,9 +316,10 @@
                             <div class="modal-input-inner">
                                 <svg class="modal-input-icon" viewBox="0 0 24 24">{!! $icons['clipboard'] !!}</svg>
                                 <select name="keterangan" id="keterangan-{{ $d->id }}" class="modal-field" required>
-                                    <option value="" disabled>Pilih status</option>
-                                    <option value="Sehat" {{ $d->keterangan == 'Sehat' ? 'selected' : '' }}>Sehat</option>
-                                    <option value="Hipertensi" {{ $d->keterangan == 'Hipertensi' ? 'selected' : '' }}>Hipertensi</option>
+                                    <option value="" selected disabled>Pilih status</option>
+                                    <option value="Belum Diperiksa" {{ old('keterangan') == 'Belum Diperiksa' ? 'selected' : '' }}>Belum Diperiksa</option>
+                                    <option value="Sehat" {{ old('keterangan') == 'Sehat' ? 'selected' : '' }}>Sehat</option>
+                                    <option value="Hipertensi" {{ old('keterangan') == 'Hipertensi' ? 'selected' : '' }}>Hipertensi</option>
                                 </select>
                             </div>
                         </div>

@@ -37,7 +37,7 @@
                 </button>
             </div>
 
-            {{-- MODAL TAMBAH --}}
+            {{-- MODAL TAMBAH, EDIT, DETAIL --}}
             <x-modals.modal-kelola-rekam-medis
                 judul="Tambah Rekam Medis"
                 type="tambah"
@@ -177,7 +177,8 @@ $(document).ready(function () {
 
     const table = $('#rekamMedisTable').DataTable({
         pageLength: 6,
-        dom: 'tp'
+        dom: 'tp',
+        order: [] // order by newest created_at
     });
 
     function renderCards() {
