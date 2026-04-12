@@ -40,7 +40,7 @@
             @if ($data->isEmpty())
                 <x-empty-state
                     icon="bi-person-badge"
-                    title="Belum Ada Data Petugas"
+                    titleEmpty="Belum Ada Data Petugas"
                     message="Data petugas masih kosong. Mulai tambahkan data petugas<br>pertama untuk memulai pengelolaan sistem."
                     actionText="Tambah Petugas Pertama"
                     actionTarget="#tambahPetugas" />

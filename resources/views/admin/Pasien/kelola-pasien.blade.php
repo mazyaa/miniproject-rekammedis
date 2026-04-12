@@ -48,7 +48,7 @@
             @if ($data->isEmpty())
                 <x-empty-state
                     icon="bi-people"
-                    title="Belum Ada Data Pasien"
+                    titleEmpty="Belum Ada Data Pasien"
                     message="Data pasien masih kosong. Mulai tambahkan data pasien<br>pertama untuk memulai pengelolaan rekam medis."
                     actionText="Tambah Pasien Pertama"
                     actionTarget="#tambahPasien" />
@@ -180,7 +180,7 @@ $(document).ready(function () {
         dom: 'tp'
     });
 
-    // for shoeing cards instead of table rows if data 
+    // for shoeing cards instead of table rows if data
     function renderCards() {
         const container = $('#pasienCards');
         container.html('');
