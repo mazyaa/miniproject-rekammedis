@@ -116,7 +116,6 @@
                                         </span>
 
                                         <div class="card-actions">
-
                                             {{-- DETAIL --}}
                                             <button class="btn btn-warning btn-sm"
                                                 data-bs-toggle="modal"

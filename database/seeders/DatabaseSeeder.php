@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            JenisKelaminSeeder::class,
-            DesaSeeder::class,
-            PasienSeeder::class
+            // JenisKelaminSeeder::class,
+            // DesaSeeder::class,
+            // PasienSeeder::class
         ]);
         \App\Models\User::factory()->create([
             'username' => 'admin',

@@ -25,6 +25,20 @@
                     </button>
                 </div>
             </div>
+{{-- REUSABLE EMPTY STATE MODAL --}}
+<x-modals.empty-state-modal :show="$data->isEmpty()" modalId="emptyStateModal" icon="bi-person-badge"
+    title="Belum Ada Data Jenis Kelamin"
+    message="Data jenis kelamin masih kosong. Mulai tambahkan data jenis kelamin pertama untuk memulai pengelolaan data pasien."
+    addButtonText="Tambah Jenis Kelamin Pertama" addButtonTarget="#tambah"
+    tip="Anda dapat menambahkan jenis kelamin baru dengan mengklik tombol Tambah di bagian atas halaman." />
+
+{{-- EMPTY STATE --}}
+@if ($data->isEmpty())
+    <x-empty-state icon="bi-gender-neuter" titleEmpty="Belum Ada Data Jenis Kelamin"
+        message="Data jenis kelamin masih kosong. Mulai tambahkan data jenis kelamin pertama untuk memulai pengelolaan data pasien."
+        actionText="Tambah Jenis Kelamin Pertama" actionTarget="#tambah" />
+@endif
+
             <!-- Stats Cards Layout - Colorful & Modern -->
             <div class="row mb-5">
                 @foreach ($data as $d)
@@ -100,6 +114,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
+        { { -- ! AUTO SHOW EMPTY STATE MODAL-- } }
+        @if ($data->isEmpty())
+            const emptyStateModal = new bootstrap.Modal(document.getElementById('emptyStateModal'));
+            emptyStateModal.show();
+        @endif
+
         // ! Konfirmasi Delete
         document.querySelectorAll('form[id^="delete-form-"]').forEach(function (form) {
             form.addEventListener('submit', function (e) {
